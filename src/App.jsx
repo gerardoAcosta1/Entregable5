@@ -14,10 +14,10 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<HomaPage/>}/>
-        <Route element={<ProtectedRoutes/>}>
+        
         <Route path='/pokedex' element={<PokedexPage/>}/>
         <Route path='/pokedex/:id' element={<PokeIdPage/>}/>
-        </Route>
+        
         <Route path='*' element={<Page404/>}/>
       </Routes>
     </>
