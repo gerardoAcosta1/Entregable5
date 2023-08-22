@@ -218,7 +218,7 @@
 .container__header{
     display: flex;
     margin-top: 1em;
-    margin-right: 5em;
+    margin-right: 1em;
     justify-content: center;
     
 
@@ -277,12 +277,21 @@
 }
 
 .pagination{
-    border-width: 1px;
+    border-width: 5px;
+   
     display: flex;
-    gap: 1em;
+    gap: .2em;
     justify-content: center;
+    cursor: pointer;
+    background-color: white;
 }
 .pagination__btn{
+    background-color: white;
+    cursor: pointer;
+
+}
+.previous{
+    background-color: white;
     cursor: pointer;
 }
 @media screen and (max-width:1000px) {

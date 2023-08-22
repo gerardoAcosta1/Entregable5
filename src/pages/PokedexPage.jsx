@@ -3,7 +3,7 @@ import useFetch from "../hooks/useFetch"
 import { useEffect, useRef, useState } from "react"
 import PokeCard from "../components/PokedexPage/PokeCard"
 import SelectType from "../components/PokedexPage/SelectType"
-
+import '../../src/components/styles/PokeCard.css'
 
 
 const PokedexPage = () => {
@@ -104,6 +104,7 @@ const PokedexPage = () => {
       </div>
       <div className="pagination">
         <button 
+        className="previous"
         onClick={() => setUrl(pokemons?.previous)}
         >Previous</button>
         {
@@ -114,6 +115,7 @@ const PokedexPage = () => {
             url={page?.url}
             className="pagination__btn"
             id={page}
+            
           onClick={() => setItem(page)}
           >{page}</button>
 
@@ -123,7 +125,7 @@ const PokedexPage = () => {
            
           
         
-        <button onClick={() => next()} >Next</button>
+        <button  className="previous" onClick={() => next()} >Next</button>
       </div>
       <div className="pokecard__container">
         {
