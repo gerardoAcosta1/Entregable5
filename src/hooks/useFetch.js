@@ -6,7 +6,7 @@ const useFetch = (url) => {
 
   const getApi = () => {
     axios.get(url)
-    .then(res => setInfoApi(res.data))
+    .then(res => setInfoApi(res?.data))
     .catch(err => console.log(err))
   }
   const getTypeApi = (urlType) =>{

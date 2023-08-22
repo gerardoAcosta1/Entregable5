@@ -16,7 +16,7 @@ const PokedexPage = () => {
   const [selectValue, setSelectValue] = useState('allPokemons')
   const [item, setItem] = useState(1)
 
-  const [url, setUrl] = useState(`https://pokeapi.co/api/v2/pokemon`)
+  const [url, setUrl] = useState(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200`)
 
   const [pokemons, getAllPokemons, getPokemonsByType] = useFetch(url)
 
@@ -28,10 +28,11 @@ const PokedexPage = () => {
 
   useEffect(() => {
     if ((selectValue === 'allPokemons')) {
+      setUrl(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200`)
       getAllPokemons()
       setItem(1)
       quantityPokemons()
-      console.log(pokemons)
+      
     
     } else {
       getPokemonsByType(`${selectValue}`)
@@ -63,7 +64,12 @@ const PokedexPage = () => {
       setItem(item + 1)
     }
    
-    setUrl(pokemons?.next)
+    //setUrl(pokemons?.next)
+  }
+  const previous = () => {
+    if(item > 1){
+      setItem(item - 1)
+    }
   }
 
   const quantityPokemons = (e = 0) => {
@@ -101,11 +107,10 @@ const PokedexPage = () => {
           <button className="container__button" >Search</button>
         </form>
         <SelectType setSelectValue={setSelectValue} />
-      </div>
-      <div className="pagination">
+        <div className="pagination">
         <button 
         className="previous"
-        onClick={() => setUrl(pokemons?.previous)}
+        onClick={previous}
         >Previous</button>
         {
           quantityPokemons().pages?.map(page => (
@@ -127,6 +132,8 @@ const PokedexPage = () => {
         
         <button  className="previous" onClick={() => next()} >Next</button>
       </div>
+      </div>
+      
       <div className="pokecard__container">
         {
   
