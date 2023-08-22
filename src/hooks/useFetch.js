@@ -10,11 +10,13 @@ const useFetch = (url) => {
     .catch(err => console.log(err))
   }
   const getTypeApi = (urlType) =>{
+     const url = `${urlType}`
     axios.get(urlType)
     .then(res => {
       const obj = {
         results: res.data.pokemon.map(e => e.pokemon)
       }
+    
       setInfoApi(obj)
       
     })

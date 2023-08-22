@@ -3,54 +3,44 @@ import useFetch from "../hooks/useFetch"
 import { useEffect, useRef, useState } from "react"
 import PokeCard from "../components/PokedexPage/PokeCard"
 import SelectType from "../components/PokedexPage/SelectType"
-import { setTrainerG } from "../store/slices/trainer.slice"
-import { setPageG } from "../store/slices/pageSlice"
+
 
 
 const PokedexPage = () => {
 
 
   const trainer = useSelector(reducer => reducer.trainer)
-  const pageSlice = useSelector(reducer => reducer.pageSlice)
-
-  const dispatch = useDispatch()
+  
   
   const [inputValue, setInputValue] = useState('')
   const [selectValue, setSelectValue] = useState('allPokemons')
-  const [url, setUrl] = useState(`https://pokeapi.co/api/v2/pokemon?offset=${pageSlice}&limite=100`)
-  const [pages, setPages] = useState([1, 2, 3, 4, 5])
-  const [p, setP] = useState(1)
-  const [on, setOn] = useState(false)
-  let [start, setStart] = useState(0)
-  let [finish, setOFinish] = useState(20)
-  const [arreglo, setArreglo] = useState([])
+  const [item, setItem] = useState(1)
 
-
-  useEffect(() => {
-    setUrl(`https://pokeapi.co/api/v2/pokemon?offset=${pageSlice}&limite=100`)
-  }, [pageSlice])
-
+  const [url, setUrl] = useState(`https://pokeapi.co/api/v2/pokemon`)
 
   const [pokemons, getAllPokemons, getPokemonsByType] = useFetch(url)
+
+  const inputSearch = useRef()
+  
+  
+  //***********useEffect*********************** */
 
 
   useEffect(() => {
     if ((selectValue === 'allPokemons')) {
       getAllPokemons()
-      setOn(false)
+      setItem(1)
+      quantityPokemons()
+      console.log(pokemons)
     
     } else {
-      getPokemonsByType(selectValue)
-      setOn(true)
-      arreglo.push(pokemons?.results.slice(start, finish))
-
+      getPokemonsByType(`${selectValue}`)
+      setItem(1)
     }
 
-  }, [selectValue, url, pageSlice,on,arreglo])
+  }, [selectValue, url])
 
-
-
-  const inputSearch = useRef()
+  //****************Functions**************** */
 
   const handleSubmit = e => {
 
@@ -60,71 +50,46 @@ const PokedexPage = () => {
 
   }
 
-  const cbFilter = poke => poke.name.includes(inputValue)
-
-  const handlePage = e => {
-
-    if (e == 5) {
-      dispatch(setPageG(80))
-      finish=80
-      start=60
-      setStart(80)
-      setOFinish(100)
-    }
-    if (e == 4) {
-      dispatch(setPageG(60))
-      setStart(60)
-      setOFinish(80)
-    }
-    if (e == 3) {
-      dispatch(setPageG(40))
-      setStart(40)
-      setOFinish(60)
-    }
-    if (e == 2) {
-      dispatch(setPageG(20))
-      setStart(20)
-      setOFinish(40)
-    }
-    if (e == 1) {
-      dispatch(setPageG(0));
-      setStart(0)
-      setOFinish(20)
-    }
-    if(on){
-      setArreglo([])
-      arreglo.push(pokemons?.results.slice(start, finish))
-    }
-    setP(e)
-    console.log(p)
+  const cbFilter = poke => {
+    
+    const pokemonsByCategory = poke?.name?.includes(inputValue)
+   
+    return pokemonsByCategory
   }
 
-  const handlePageBtn = e => {
+  const next = e => {
 
-    if (e === 0) {
-      if (p > 1) {
-        setP(p - 1)
-      }
-      
-      setUrl(pokemons?.previous)
-
-    } else {
-      if(finish > pokemons.results.length){
-        finish= 20
-        start = 0
-        console.log(finish)
-      }
-      if(on){
-        console.log(arreglo)
-        setArreglo([])
-        setStart(start+20)
-        setOFinish(finish+20)
-        arreglo.push(pokemons?.results.slice(start, finish))
-      }
-      setP(p + 1)
-      setUrl(pokemons?.next)
+    if(item < quantityPokemons().pages.length){
+      setItem(item + 1)
     }
+   
+    setUrl(pokemons?.next)
   }
+
+  const quantityPokemons = (e = 0) => {
+
+    const quantity = pokemons?.results.length
+
+    const itemsForPage = 20
+
+    let pages = []
+
+    let noOfPages = quantity / itemsForPage;
+
+    for (let i = 1; i < noOfPages; i++) {
+      pages.push(i);
+    }
+    
+    let  pageNumber = item
+
+    const itemsToSkip = (pageNumber - 1) * itemsForPage
+
+    const items = pokemons?.results.slice(itemsToSkip, itemsForPage + itemsToSkip);
+
+    return {items, pages}
+  }
+
+
 
   return (
     <div >
@@ -138,35 +103,35 @@ const PokedexPage = () => {
         <SelectType setSelectValue={setSelectValue} />
       </div>
       <div className="pagination">
-        <button onClick={() => handlePageBtn(0)}>Previous</button>
+        <button 
+        onClick={() => setUrl(pokemons?.previous)}
+        >Previous</button>
         {
-          pages?.map(num => (
+          quantityPokemons().pages?.map(page => (
+            
             <button
-              className="pagination__btn"
-              onClick={() => handlePage(num)}
-              key={num}
-              p={p}
-            >{num > 4 ? `...${p}` : num}</button>
+            key={page?.url}
+            url={page?.url}
+            className="pagination__btn"
+            id={page}
+          onClick={() => setItem(page)}
+          >{page}</button>
+
           ))
         }
-        <button onClick={() => handlePageBtn(1)}>Next</button>
+          
+           
+          
+        
+        <button onClick={() => next()} >Next</button>
       </div>
       <div className="pokecard__container">
         {
-          on
-          ?
-          arreglo[0]?.map(poke => (
-            <PokeCard
-              key={poke.url}
-              url={poke.url}
-
-            />
-          ))
-          :
-            pokemons?.results.filter(cbFilter).map(poke => (
+  
+          quantityPokemons().items?.filter(cbFilter).map(poke => (
               <PokeCard
-                key={poke.url}
-                url={poke.url}
+                key={poke?.url}
+                url={poke?.url}
 
               />
             ))

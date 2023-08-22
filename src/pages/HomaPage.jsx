@@ -8,8 +8,6 @@ const HomaPage = () => {
 
   const trainer = useSelector(reducer => reducer.trainer)
 
-console.log(trainer)
-
 const inputTrainer = useRef()
 
 const dispatch = useDispatch()
@@ -25,7 +23,7 @@ navigate('/pokedex')
     <div className='container__presentation'>
       <h1 className='title__presentation'>pokedex</h1>
       <h2 className='welcome__presentation'>Hi trainer</h2>
-      <p className='description__presentation'>To start with the app, give me your name </p>
+      <p className='description__presentation'>To start with the app, give me your name ()</p>
       <form className='form__presentation' onSubmit={handleSubmit}>
         <input className='input__presentation' ref={inputTrainer} type="text" />
         <button className='button__presentation' >Gotta catch'em all</button>

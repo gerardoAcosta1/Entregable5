@@ -1,11 +1,7 @@
 import { useEffect } from "react"
 import useFetch from "../../hooks/useFetch"
-import { useDispatch, useSelector } from "react-redux"
-import { setPageG } from "../../store/slices/pageSlice"
 
 const SelectType = ({setSelectValue}) => {
-
-   
 
   
     const url = 'https://pokeapi.co/api/v2/type/'
@@ -15,7 +11,7 @@ const SelectType = ({setSelectValue}) => {
     },[])
     
     const handleChange = e => {
-       setSelectValue(e.target.value)
+       setSelectValue(`${e.target.value}`)
     }
 
   return (
