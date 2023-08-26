@@ -308,6 +308,8 @@
     width: 100%;
     margin-right: 1em;
     margin-bottom: 1em;
+    font-weight: 400;
+    
 }
 .container__name{
     color: rgb(66, 125, 128);
@@ -320,26 +322,29 @@
     
 }
 .container__input{
-    height: 25px;
-    width: 70%;
+    height: 30px;
+    width: 150px;
     max-width: 400px;
 
     
     
     border-width: 0.5px;
-    border-color:  #3BB039;
+    border:none;
+    border: 1px solid rgba(128, 128, 128, 0.471);
     box-shadow: 1px 1px 1px gray;
     
 }
 .container__button{
     
-    height: 25px;
+    height: 30px;
     cursor: pointer;
     box-shadow: 1px 1px 1px rgb(66, 125, 128);
     
+    border: none;
     background: rgb(66, 125, 128);
     color: white;
 }
+
 .SelectType{
     display: inline-block;
     right: 0;
@@ -347,7 +352,7 @@
     margin-top: 15px;
     box-shadow: 1px 1px 1px rgb(66, 125, 128);
     
-    border-color: rgb(66, 125, 128);
+    border:1px solid rgba(128, 128, 128, 0.576);
     outline: 0 ;
 
 }
@@ -383,6 +388,21 @@
     max-width: max-content;
     background-color: white;
     cursor: pointer;
+    font-weight: 400;
+}
+.prueba{
+    font-weight: 500;
+    font-size: 20px;
+}
+textarea, select, input, button { 
+    outline: none;
+}
+:focus { 
+    outline-color: transparent; 
+    outline-style: none;
+}
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 @media screen and (max-width:1000px) {
     .container__header{

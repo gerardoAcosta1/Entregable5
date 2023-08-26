@@ -116,11 +116,12 @@ const PokedexPage = () => {
           quantityPokemons().pages?.map(page => (
             
             <button
+            
             key={page?.url}
             url={page?.url}
-            className="pagination__btn"
+        
             id={page}
-            
+            className={`pagination__btn ${item == page ? 'prueba' : ''}`}
           onClick={() => setItem(page)}
           >{page}</button>
 
