@@ -23,7 +23,7 @@ const PokeCard = ({ url }) => {
 
     return (
         <article onClick={handleClick} className={`pokecard ${firstType}-border`}>
-            <header className={`pokecard__header ${firstType}-gradient`}>
+            <header className={`pokecard__header ${firstType}`}>
                 <img className="pokecard__image" src={pokemon?.sprites.other['official-artwork'].front_default} alt="" />
             </header>
             <section className="pokecard__body">

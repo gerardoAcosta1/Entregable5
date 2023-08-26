@@ -20,13 +20,15 @@
     box-shadow: 2px 2px 2px rgb(27, 99, 121);
     border-color: rgb(27, 99, 121);
     border-style: none;
-    border: .5px solid black;
+    border: .5px solid rgba(83, 80, 80, 0.522);
     height: 20px;
     width: 130px;
 }
 .button__presentation{
     height: 20px;
     width: max-content;
+    border: none;
+    cursor: pointer;
     background-color:rgb(27, 99, 121);
     color: white;
     box-shadow: 2px 2px 2px rgb(27, 99, 121);
